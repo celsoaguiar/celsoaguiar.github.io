@@ -19,11 +19,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="show-list-page">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
         max-width: 800px;
         margin: auto;
       }
+
       app-drawer {
         white-space: nowrap;
         margin-left: 56px;
@@ -32,11 +33,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           background-color: transparent;
         }
       }
+
       .grid-item {
         width: 50%;
         height: 40vh;
       }
-      .grid-item > a {
+
+      .grid-item>a {
         margin: 10px;
         width: calc(100% - 20px);
         height: calc(100% - 20px);
@@ -49,6 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         align-items: flex-end;
         text-decoration: none;
       }
+
       .title {
         font-size: 15px;
         color: white;
@@ -57,6 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: black;
         width: 100%;
       }
+
       .loading-indicator {
         font-size: 15px;
         line-height: 120px;
@@ -65,9 +70,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
         opacity: 1;
       }
+
       .loading-indicator[off] {
         opacity: 0;
       }
+
       .nav {
         padding-top: 100px;
         text-align: right;
@@ -75,6 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding-right: 20px;
         height: 100%;
       }
+
       .nav a {
         color: #c0c0c0;
         text-decoration: none;
@@ -85,14 +93,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transform-origin: right center;
         transition: transform 0.2s;
       }
+
       .nav a:hover {
         color: #dfdfdf;
         transform: scale3d(1.2, 1.2, 1);
       }
+
       .active a {
         color: white;
         font-weight: bold;
       }
+
       .nav h2 {
         color: white;
         font-weight: 100;
@@ -102,15 +113,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 32px 0;
         color: #666;
       }
+
       #list {
         min-height: 100vh;
       }
+
       @media (max-width: 640px) {
         .grid-item {
           width: 100%;
           height: 40vh;
         }
       }
+
       @media (max-width: 1280px) {
         app-drawer {
           margin-left: 0;
@@ -122,16 +136,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <iron-ajax
-      auto
-      url="https://www.googleapis.com/youtube/v3/search?part=snippet&q=[[show.q]]&channelId=UCnUYZLuoy1rq1aVMwx4aTzw&order=date&maxResults=20&pageToken=[[pageToken]]&key=AIzaSyA053VCd78p0v2Pica01W_ljGUSAfzl0vA"
-      handle-as="json"
-      on-response="_onXhrResponse">
+    <iron-ajax auto url="https://www.googleapis.com/youtube/v3/search?part=snippet&q=[[show.q]]&channelId=UCnUYZLuoy1rq1aVMwx4aTzw&order=date&maxResults=20&pageToken=[[pageToken]]&key=AIzaSyA053VCd78p0v2Pica01W_ljGUSAfzl0vA"
+      handle-as="json" on-response="_onXhrResponse">
     </iron-ajax>
 
-    <app-drawer
-        opened="{{openedDrawer}}"
-        persistent="[[persistentDrawer]]">
+    <app-drawer opened="{{openedDrawer}}" persistent="[[persistentDrawer]]">
       <ul class="nav" role="navigation">
         <h2>Shows</h2>
         <iron-selector selected="[[show.subroute]]" attr-for-selected="name" selected-class="active">
@@ -142,9 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </ul>
     </app-drawer>
 
-    <iron-media-query
-    query="max-width: 1280px"
-    query-matches="{{smallScreen}}"></iron-media-query>
+    <iron-media-query query="max-width: 1280px" query-matches="{{smallScreen}}"></iron-media-query>
 
     <iron-list id="list" scroll-target="document" items="[[items]]" grid>
       <template>
@@ -154,14 +161,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </a>
         </div>
       </template>
-    </iron-list> 
+    </iron-list>
 
-    <iron-scroll-threshold
-        id="scrollThreshold"
-        scroll-target="document"
-        lower-threshold="0"
-        on-lower-threshold="_onLowerThreshold"></iron-scroll-threshold>
-    <div class="loading-indicator" off$="[[lastPage]]">More videos to come...</div>    
+    <iron-scroll-threshold id="scrollThreshold" scroll-target="document" lower-threshold="0" on-lower-threshold="_onLowerThreshold"></iron-scroll-threshold>
+    <div class="loading-indicator" off$="[[lastPage]]">More videos to come...</div>
 
   </template>
 
@@ -189,7 +192,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           /* the list of shows */
           shows: {
             type: Array,
-            value: function() {
+            value: function () {
               return [
                 { name: 'All', subroute: 'all', q: '' },
                 { name: 'Polycasts', subroute: 'polycast', q: 'polycasts' },
@@ -199,7 +202,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               ];
             }
           },
-          subroute: Object,
+          subroute: {
+            type: Object,
+            value: { prefix: "/", path: "" }
+          },
           show: {
             type: Object,
             computed: '_getActiveShow(shows, subroute)',
@@ -211,7 +217,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           items: {
             type: Array,
-            value: function() {
+            value: function () {
               return [];
             }
           },
@@ -234,11 +240,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _updateToolbar(active, smallScreen) {
         if (active) {
-          this.dispatchEvent(new CustomEvent('setup-toolbar', { 
+          this.dispatchEvent(new CustomEvent('setup-toolbar', {
             detail: {
-            leftItemIcon: smallScreen ? 'menu' : '',
-            leftItemClickAction: function() { this.openedDrawer = true; }.bind(this)
-          }}));
+              leftItemIcon: smallScreen ? 'menu' : '',
+              leftItemClickAction: function () { this.openedDrawer = true; }.bind(this)
+            }
+          }));
 
         }
         this.persistentDrawer = !smallScreen;
@@ -247,7 +254,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _getActiveShow(shows, subroute) {
         var key = subroute.path ? subroute.path.substr(1) : 'all';
-        var res = shows.filter(function(show) { return show.subroute == key; });
+        var res = shows.filter(function (show) { return show.subroute == key; });
         return res[0] ? res[0] : shows[0];
       }
 
@@ -273,7 +280,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.nextPageToken = response.nextPageToken;
           }
           this.currentShow = this.show;
-          items.forEach(function(item) {
+          items.forEach(function (item) {
             this.push('items', item);
           }, this);
         }
@@ -287,6 +294,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     customElements.define(ShowListPage.is, ShowListPage);
-
   </script>
 </dom-module>
