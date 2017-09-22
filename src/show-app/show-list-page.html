@@ -6,7 +6,8 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><link rel="import" href="../../bower_components/polymer/polymer.html">
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
@@ -121,10 +122,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <iron-ajax auto="" url="https://www.googleapis.com/youtube/v3/search?part=snippet&amp;q=[[show.q]]&amp;channelId=UCnUYZLuoy1rq1aVMwx4aTzw&amp;order=date&amp;maxResults=20&amp;pageToken=[[pageToken]]&amp;key=AIzaSyA053VCd78p0v2Pica01W_ljGUSAfzl0vA" handle-as="json" on-response="_onXhrResponse">
+    <iron-ajax
+      auto
+      url="https://www.googleapis.com/youtube/v3/search?part=snippet&q=[[show.q]]&channelId=UCnUYZLuoy1rq1aVMwx4aTzw&order=date&maxResults=20&pageToken=[[pageToken]]&key=AIzaSyA053VCd78p0v2Pica01W_ljGUSAfzl0vA"
+      handle-as="json"
+      on-response="_onXhrResponse">
     </iron-ajax>
 
-    <app-drawer opened="{{openedDrawer}}" persistent="[[persistentDrawer]]">
+    <app-drawer
+        opened="{{openedDrawer}}"
+        persistent="[[persistentDrawer]]">
       <ul class="nav" role="navigation">
         <h2>Shows</h2>
         <iron-selector selected="[[show.subroute]]" attr-for-selected="name" selected-class="active">
@@ -135,9 +142,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </ul>
     </app-drawer>
 
-    <iron-media-query query="max-width: 1280px" query-matches="{{smallScreen}}"></iron-media-query>
+    <iron-media-query
+    query="max-width: 1280px"
+    query-matches="{{smallScreen}}"></iron-media-query>
 
-    <iron-list id="list" scroll-target="document" items="[[items]]" grid="">
+    <iron-list id="list" scroll-target="document" items="[[items]]" grid>
       <template>
         <div class="grid-item">
           <a href="/video/[[item.id.videoId]]" style$="background-image:url([[item.snippet.thumbnails.high.url]]);">
@@ -147,7 +156,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </iron-list> 
 
-    <iron-scroll-threshold id="scrollThreshold" scroll-target="document" lower-threshold="0" on-lower-threshold="_onLowerThreshold"></iron-scroll-threshold>
+    <iron-scroll-threshold
+        id="scrollThreshold"
+        scroll-target="document"
+        lower-threshold="0"
+        on-lower-threshold="_onLowerThreshold"></iron-scroll-threshold>
     <div class="loading-indicator" off$="[[lastPage]]">More videos to come...</div>    
 
   </template>

@@ -5,7 +5,9 @@ The complete set of authors may be found at https://polymer.github.io/AUTHORS.tx
 The complete set of contributors may be found at https://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at https://polymer.github.io/PATENTS.txt
---><link rel="import" href="../polymer/polymer.html">
+-->
+
+<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../google-apis/google-youtube-api.html">
 
@@ -77,7 +79,11 @@ Custom property | Description | Default
     </style>
     <div id="container" style$="{{_computeContainerStyle(width, height)}}">
       <template is="dom-if" if="{{thumbnail}}">
-        <img id="thumbnail" src$="{{thumbnail}}" title="YouTube video thumbnail." alt="YouTube video thumbnail." on-tap="_handleThumbnailTap">
+        <img id="thumbnail"
+             src$="{{thumbnail}}"
+             title="YouTube video thumbnail."
+             alt="YouTube video thumbnail."
+             on-tap="_handleThumbnailTap">
       </template>
 
       <template is="dom-if" if="{{!thumbnail}}">
@@ -88,7 +94,10 @@ Custom property | Description | Default
 
       <!-- Use this._playsupportedLocalStorage as the value, since this.playsupported is set to
            true as soon as initial playback has started, and we don't want that cached. -->
-      <iron-localstorage name="google-youtube-playsupported" value="{{_playsupportedLocalStorage}}" on-iron-localstorage-load="_useExistingPlaySupportedValue" on-iron-localstorage-load-empty="_determinePlaySupported">
+      <iron-localstorage name="google-youtube-playsupported"
+                         value="{{_playsupportedLocalStorage}}"
+                         on-iron-localstorage-load="_useExistingPlaySupportedValue"
+                         on-iron-localstorage-load-empty="_determinePlaySupported">
       </iron-localstorage>
 
       <div id="player"></div>

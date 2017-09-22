@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
@@ -25,7 +27,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/src/service-worker.js')
+          navigator.serviceWorker.register('/service-worker.js')
             .then(function(registration) {
               console.log('Registration successful, scope is:', registration.scope);
             })
@@ -39,6 +41,5 @@
   </head>
   <body>
     <show-app></show-app>
-  
-
-</body></html>
+  </body>
+</html>
