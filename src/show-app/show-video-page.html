@@ -53,22 +53,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      static get observers() {
-        return [
-          '_updateToolbar(active, smallScreen)',
-        ]
-      }
-
       _getVideoId(subroute) {
         return subroute && subroute.path ? subroute.path.substr(1) : '';
       }
 
       _activeDidChange(active) {
         if (active) {
-          this.fire('setup-toolbar', {
+          this.dispatchEvent(new CustomEvent('setup-toolbar', {
             leftItemIcon: 'arrow-back',
             leftItemClickAction: function() { window.history.back(); }
-          });
+          }));
         }
       }
 
